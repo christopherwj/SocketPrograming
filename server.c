@@ -12,7 +12,8 @@ int main()
 	int sock, clientsock, mlen, addrsize, msgct, chc, chct;
 	struct sockaddr_in addr;
 	char ch,buf[80];
-	
+
+	printf("server is running");
 	//create a socket
 	sock = socket(AF_INET, SOCK_STREAM,0);
 	//socket doesn't exit
@@ -29,7 +30,7 @@ int main()
 	addr.sin_port = htons(32351);
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-	if(bind(sock,&addr, sizeof(struct socketaddr_in)) == -1)
+	if(bind(sock,&addr, sizeof(struct sockaddr_in)) == -1)
 	{
 		perror("on bind");
 		exit(-1);
@@ -43,7 +44,7 @@ int main()
 
 	//wait for a client to connect. Once connected print out a message.
 
-	addrsize = sizeof(struct socketaddr_in); 
+	addrsize = sizeof(struct sockaddr_in); 
 	clientsock = accept(sock, &addr, &addrsize);
 	if(clientsock == -1)
 	{
