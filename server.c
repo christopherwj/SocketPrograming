@@ -10,7 +10,7 @@
 int main()
 {
 	int sock, clientsock, mlen, addrsize, msgct, chc, chct;
-	struct socketaddr_in addr;
+	struct sockaddr_in addr;
 	char ch,buf[80];
 	
 	//create a socket
