@@ -117,25 +117,25 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-client/CMakeFiles/client.c.dir/rule:
-	cd /home/cwjohn/repos/socketProgramming/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client/CMakeFiles/client.c.dir/rule
-.PHONY : client/CMakeFiles/client.c.dir/rule
+client/CMakeFiles/client.dir/rule:
+	cd /home/cwjohn/repos/socketProgramming/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client/CMakeFiles/client.dir/rule
+.PHONY : client/CMakeFiles/client.dir/rule
 
 # Convenience name for target.
-client.c: client/CMakeFiles/client.c.dir/rule
-.PHONY : client.c
+client: client/CMakeFiles/client.dir/rule
+.PHONY : client
 
 # fast build rule for target.
-client.c/fast:
-	cd /home/cwjohn/repos/socketProgramming/build && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/client.c.dir/build.make client/CMakeFiles/client.c.dir/build
-.PHONY : client.c/fast
+client/fast:
+	cd /home/cwjohn/repos/socketProgramming/build && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/client.dir/build.make client/CMakeFiles/client.dir/build
+.PHONY : client/fast
 
 client.o: client.c.o
 .PHONY : client.o
 
 # target to build an object file
 client.c.o:
-	cd /home/cwjohn/repos/socketProgramming/build && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/client.c.dir/build.make client/CMakeFiles/client.c.dir/client.c.o
+	cd /home/cwjohn/repos/socketProgramming/build && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/client.dir/build.make client/CMakeFiles/client.dir/client.c.o
 .PHONY : client.c.o
 
 client.i: client.c.i
@@ -143,7 +143,7 @@ client.i: client.c.i
 
 # target to preprocess a source file
 client.c.i:
-	cd /home/cwjohn/repos/socketProgramming/build && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/client.c.dir/build.make client/CMakeFiles/client.c.dir/client.c.i
+	cd /home/cwjohn/repos/socketProgramming/build && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/client.dir/build.make client/CMakeFiles/client.dir/client.c.i
 .PHONY : client.c.i
 
 client.s: client.c.s
@@ -151,7 +151,7 @@ client.s: client.c.s
 
 # target to generate assembly for a file
 client.c.s:
-	cd /home/cwjohn/repos/socketProgramming/build && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/client.c.dir/build.make client/CMakeFiles/client.c.dir/client.c.s
+	cd /home/cwjohn/repos/socketProgramming/build && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/client.dir/build.make client/CMakeFiles/client.dir/client.c.s
 .PHONY : client.c.s
 
 # Help Target
@@ -162,7 +162,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... client.c"
+	@echo "... client"
 	@echo "... client.o"
 	@echo "... client.i"
 	@echo "... client.s"

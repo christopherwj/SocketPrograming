@@ -1,6 +1,6 @@
 /home/cwjohn/repos/socketProgramming/build/CMakeFiles/edit_cache.dir
 /home/cwjohn/repos/socketProgramming/build/CMakeFiles/rebuild_cache.dir
-/home/cwjohn/repos/socketProgramming/build/client/CMakeFiles/client.c.dir
+/home/cwjohn/repos/socketProgramming/build/client/CMakeFiles/client.dir
 /home/cwjohn/repos/socketProgramming/build/client/CMakeFiles/edit_cache.dir
 /home/cwjohn/repos/socketProgramming/build/client/CMakeFiles/rebuild_cache.dir
 /home/cwjohn/repos/socketProgramming/build/server/CMakeFiles/server.dir

@@ -117,17 +117,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named client.c
+# Target rules for targets named client
 
 # Build rule for target.
-client.c: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client.c
-.PHONY : client.c
+client: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client
+.PHONY : client
 
 # fast build rule for target.
-client.c/fast:
-	$(MAKE) $(MAKESILENT) -f client/CMakeFiles/client.c.dir/build.make client/CMakeFiles/client.c.dir/build
-.PHONY : client.c/fast
+client/fast:
+	$(MAKE) $(MAKESILENT) -f client/CMakeFiles/client.dir/build.make client/CMakeFiles/client.dir/build
+.PHONY : client/fast
 
 #=============================================================================
 # Target rules for targets named server
@@ -150,7 +150,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... client.c"
+	@echo "... client"
 	@echo "... server"
 .PHONY : help
 

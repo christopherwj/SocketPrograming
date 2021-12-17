@@ -1,12 +1,7 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required (VERSION 3.5)
 
-#set the project name
-#project(socket_client)
+project(socketProgramming)
 
-#add executable
-#add_executable(socket_client client.c)
-
-project(server)
-
-#add executable
-add_executable(server server.c)
+# Add sub directories
+add_subdirectory(client)
+add_subdirectory(server)

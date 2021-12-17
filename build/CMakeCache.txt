@@ -210,13 +210,13 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
-client.c_BINARY_DIR:STATIC=/home/cwjohn/repos/socketProgramming/build/client
+client_BINARY_DIR:STATIC=/home/cwjohn/repos/socketProgramming/build/client
 
 //Value Computed by CMake
-client.c_IS_TOP_LEVEL:STATIC=OFF
+client_IS_TOP_LEVEL:STATIC=OFF
 
 //Value Computed by CMake
-client.c_SOURCE_DIR:STATIC=/home/cwjohn/repos/socketProgramming/client
+client_SOURCE_DIR:STATIC=/home/cwjohn/repos/socketProgramming/client
 
 //Value Computed by CMake
 server_BINARY_DIR:STATIC=/home/cwjohn/repos/socketProgramming/build/server
