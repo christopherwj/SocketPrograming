@@ -12,7 +12,7 @@ typedef struct {
     float floatvalue;
 } dataPacket;
 
-int main()
+void main()
 {
 	int sock, clientsock, mlen, addrsize, msgct, chc, chct;
 	struct sockaddr_in serverAddr, clientAddr;
