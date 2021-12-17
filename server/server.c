@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 
-int main()
+void main()
 {
 	int sock, clientsock, mlen, addrsize, msgct, chc, chct;
 	struct sockaddr_in addr;
@@ -30,7 +30,7 @@ int main()
 	addr.sin_port = htons(32351);
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-	if(bind(sock,&addr, sizeof(struct sockaddr_in)) == -1)
+	if(bind(sock,(struct sockaddr*)&addr, sizeof(struct sockaddr_in)) == -1)
 	{
 		perror("on bind");
 		exit(-1);
@@ -45,7 +45,7 @@ int main()
 	//wait for a client to connect. Once connected print out a message.
 
 	addrsize = sizeof(struct sockaddr_in); 
-	clientsock = accept(sock, &addr, &addrsize);
+	clientsock = accept(sock,(struct sockaddr*) &addr, &addrsize);
 	if(clientsock == -1)
 	{
 		perror("on accept");

@@ -21,7 +21,7 @@ int main(){
     addr.sin_family = AF_INET;
     addr.sin_port = htons(32351); //makes sure port is stored in big-endian
     addr.sin_addr.s_addr = inet_network("10.130.26.28"); //stores ip string in big-endian
-    if(connect(sock, (const struct sockaddr *) &addr, sizeof(struct sockaddr_in))==-1);
+    if(connect(sock, (const struct sockaddr*) &addr, sizeof(struct sockaddr_in))==-1);
     {
         perror("on connect");
         exit(-1);
