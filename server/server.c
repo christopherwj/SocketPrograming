@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <string.h>
 
 typedef struct {
     int intvalue;
@@ -14,7 +15,7 @@ typedef struct {
 
 void main()
 {
-	int sock, clientsock, mlen, addrsize, msgct, chc, chct;
+	int sock, clientSock1, clientSock2, mlen, addrsize, msgct, chc, chct;
 	struct sockaddr_in serverAddr, clientAddr;
 	dataPacket serverData;
 	char ch, buf[80];
@@ -25,7 +26,7 @@ void main()
 	//socket doesn't exit
 	if(sock == -1)
 	{
-		printf("ERROR: opening socket");
+		perror("While opening socket");
 		exit(-1);
 	}
 	/*
@@ -38,23 +39,23 @@ void main()
 
 	if(bind(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == -1)
 	{
-		printf("ERROR: on bind");
+		perror("While binding");
 		exit(-1);
 	}
 
-	if(listen(sock,1) == -1) //make socket available 
+	if(listen(sock, 2) == -1) //make socket available 
 	{
-		perror("on listen");
+		perror("While attempting to listen");
 		exit(-1);
 	}
 
 	//wait for a client to connect. Once connected print out a message.
 
 	addrsize = sizeof(struct sockaddr_in); 
-	clientsock = accept(sock, (struct sockaddr*)&clientAddr, &addrsize);
-	if(clientsock == -1)
+	clientSock1 = accept(sock, (struct sockaddr*)&clientAddr, &addrsize);
+	if(clientSock1 == -1)
 	{
-		perror("on accept");
+		perror("On accept");
 		exit(-1);
 	}
 	printf("Connection made with client %s\n", inet_ntoa(clientAddr.sin_addr));
@@ -62,24 +63,23 @@ void main()
 	//receive and print a client message where a null char terminates 
 	//note a single receive may not work in some cases, but is OK for a simple 
 	//example
-	mlen = recv(clientsock, (dataPacket*)&serverData, sizeof(serverData), 0);
-	send(clientsock, "Got your message", 17, 0);
-	printf("Server - all messages read - connection being closed\n");
+	recv(clientSock1, (char*)&buf, sizeof(buf), 0);
+	if (strcmp(buf, "SYN"))
+	{
+		send(clientSock1, "Ban SYN", 8, 0);
+		printf("Bad SYN from client 1! Repeat Request.\n");
+		exit(-1);
+	}
+	send(clientSock1, "ACK1", 5, 0);
+	recv(clientSock1, (dataPacket*)&serverData, sizeof(serverData), 0);
+
 	printf("Message Received: %c\n", serverData.charvalue);
 	printf("Message Received: %d\n", serverData.intvalue);
 	printf("Message Received: %f\n", serverData.floatvalue);
 
-	// int l;
-	// while (1)
-	// {
-	// 	l = recv(clientsock, buf, sizeof(buf), 0);
-	// 	if (l > 0){
-	// 		printf("%s", buf);
-	// 	}
-	// }
-
 	//close the client socket and also the server socket
+	printf("Server - all messages read - connection being closed\n");
 
-	close(clientsock);
+	close(clientSock1);
 	close(sock);
 }
