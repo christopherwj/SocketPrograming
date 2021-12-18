@@ -96,8 +96,8 @@ void main()
 	recv(clientSock1, (dataPacket*)&serverData, sizeof(serverData), 0);
 
 	printf("INT Data Received: %d\n", serverData.intvalue);
-	printf("FLOAT Data Received: %f\n\n", serverData.floatvalue);
-	printf("CHAR Data Received: %c\n", serverData.charvalue);
+	printf("FLOAT Data Received: %f\n", serverData.floatvalue);
+	printf("CHAR Data Received: %c\n\n", serverData.charvalue);
 
 	serverData.intvalue = 2*serverData.intvalue;
 	serverData.floatvalue = serverData.floatvalue + 1;
