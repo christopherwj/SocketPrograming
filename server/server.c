@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <string.h>
 
+//Defining a struct to hold all the data values. Aliasing the struct as "dataPacket"
 typedef struct {
     int intvalue;
     char charvalue;
@@ -15,28 +16,40 @@ typedef struct {
 
 void main()
 {
+    /*******************************************************
+     * Defining all variables
+     ******************************************************/
 	int sock, clientSock1, clientSock2, mlen, addrsize, msgct, chc, chct;
 	struct sockaddr_in serverAddr, clientAddr;
 	dataPacket serverData;
 	char ch, buf[80];
 
 	printf("Server is running\n\n");
-	//create a socket
+
+    /*******************************************************
+     * Setting up server socket. 
+     * AF_INET = IP 
+     * SOCK_STREAM = TCP
+     * 0 = Auto setup
+     ******************************************************/
 	sock = socket(AF_INET, SOCK_STREAM, 0);
-	//socket doesn't exit
 	if(sock == -1)
 	{
 		perror("While opening socket");
 		exit(-1);
 	}
-	/*
-	* bind a name to the socket since the server will bind with any client
-	*the address is zero or INADDR_ANY
-	*/
-	serverAddr.sin_family =AF_INET;
+
+    /*******************************************************
+     * Setting up server address information and make connection attempt 
+	 * bind a name to the socket since the server will bind with any client
+	 * the address is zero or INADDR_ANY
+     * AF_INET = IP 
+     * Port Number = 32351
+     * IP Address = DNS resolved
+     *******************************************************/
+	serverAddr.sin_family = AF_INET;
 	serverAddr.sin_port = htons(32351);
 	serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-
 	if(bind(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == -1)
 	{
 		perror("While binding");
@@ -73,9 +86,9 @@ void main()
 	send(clientSock1, "ACK1", 5, 0);
 	recv(clientSock1, (dataPacket*)&serverData, sizeof(serverData), 0);
 
-	printf("Data Received: %c\n", serverData.charvalue);
-	printf("Data Received: %d\n", serverData.intvalue);
-	printf("Data Received: %f\n\n", serverData.floatvalue);
+	printf("INT Data Received: %d\n", serverData.intvalue);
+	printf("FLOAT Data Received: %f\n\n", serverData.floatvalue);
+	printf("CHAR Data Received: %c\n", serverData.charvalue);
 
 	serverData.intvalue = 2*serverData.intvalue;
 	serverData.floatvalue = serverData.floatvalue + 1;
@@ -90,9 +103,9 @@ void main()
 	}
 	printf("Connection made with client %s\n", inet_ntoa(clientAddr.sin_addr));
 
-	printf("Data Sent: %c\n", serverData.charvalue);
-	printf("Data Sent: %d\n", serverData.intvalue);
-	printf("Data Sent: %f\n", serverData.floatvalue);
+	printf("INT Data Sent: %d\n", serverData.intvalue);
+	printf("FLOAT Data Sent: %f\n", serverData.floatvalue);
+	printf("CHAR Data Sent: %c\n", serverData.charvalue);
 
     send(clientSock2, (dataPacket*)&serverData, sizeof(serverData), 0);
 
