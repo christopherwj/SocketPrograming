@@ -56,14 +56,16 @@ void main()
 		exit(-1);
 	}
 
-	if(listen(sock, 2) == -1) //make socket available 
+    /*******************************************************
+     * Make the socket available and allow for 2 connections in listen buffer.
+	 * Once a client has reached out to connect, accept the connection and
+	 * indicate to user that a connection has been made.
+     ******************************************************/
+	if(listen(sock, 2) == -1) 
 	{
 		perror("While attempting to listen");
 		exit(-1);
 	}
-
-	//wait for a client to connect. Once connected print out a message.
-
 	addrsize = sizeof(struct sockaddr_in); 
 	clientSock1 = accept(sock, (struct sockaddr*)&clientAddr, &addrsize);
 	if(clientSock1 == -1)
@@ -73,9 +75,10 @@ void main()
 	}
 	printf("Connection made with client %s\n", inet_ntoa(clientAddr.sin_addr));
 	
-	//receive and print a client message where a null char terminates 
-	//note a single receive may not work in some cases, but is OK for a simple 
-	//example
+    /*******************************************************
+	 * Wait for a SYN packet from the 1st client. Once received
+	 * send an ACK1 to indicate to client that it must send data.
+     ******************************************************/
 	recv(clientSock1, (char*)&buf, sizeof(buf), 0);
 	if (strcmp(buf, "SYN"))
 	{
@@ -84,6 +87,12 @@ void main()
 		exit(-1);
 	}
 	send(clientSock1, "ACK1", 5, 0);
+	
+
+    /*******************************************************
+	 * Get stuct data from 1st client. Print data to console
+	 * and manipulate data as required by the program.
+     ******************************************************/
 	recv(clientSock1, (dataPacket*)&serverData, sizeof(serverData), 0);
 
 	printf("INT Data Received: %d\n", serverData.intvalue);
@@ -94,8 +103,12 @@ void main()
 	serverData.floatvalue = serverData.floatvalue + 1;
 	serverData.charvalue = (char)((int)serverData.charvalue + 1);
 
+    /*******************************************************
+	 * Connect to 2nd client and wait for SYN packet
+	 * Wait for a SYN packet from the 2nd client. Once received
+	 * send an ACK1 to indicate to client that it must send data.
+     ******************************************************/
 	clientSock2 = accept(sock, (struct sockaddr*)&clientAddr, &addrsize);
-	send(clientSock2, "ACK2", 5, 0);
 	if(clientSock2 == -1)
 	{
 		perror("On accept");
@@ -103,13 +116,34 @@ void main()
 	}
 	printf("Connection made with client %s\n", inet_ntoa(clientAddr.sin_addr));
 
+    /*******************************************************
+	 * Wait for a SYN packet from the 2nd client. Once received
+	 * send an ACK2 to indicate to client that it must receive
+	 * modified data.
+     ******************************************************/
+	recv(clientSock2, (char*)&buf, sizeof(buf), 0);
+	if (strcmp(buf, "SYN"))
+	{
+		send(clientSock2, "Ban SYN", 8, 0);
+		printf("Bad SYN from client 2! Repeat Request.\n");
+		exit(-1);
+	}
+	send(clientSock2, "ACK2", 5, 0);
+
+
+    /*******************************************************
+	 * Get stuct data from 1st client. Print data to console
+	 * and manipulate data as required by the program.
+     ******************************************************/
+    send(clientSock2, (dataPacket*)&serverData, sizeof(serverData), 0);
+
 	printf("INT Data Sent: %d\n", serverData.intvalue);
 	printf("FLOAT Data Sent: %f\n", serverData.floatvalue);
 	printf("CHAR Data Sent: %c\n", serverData.charvalue);
 
-    send(clientSock2, (dataPacket*)&serverData, sizeof(serverData), 0);
-
-	//close the client socket and also the server socket
+    /*******************************************************
+	 * Close both client sockets and server socket
+     ******************************************************/
 	printf("Server - process complete - connection being closed\n");
 	close(clientSock1);
 	close(clientSock2);
