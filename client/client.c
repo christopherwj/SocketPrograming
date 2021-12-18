@@ -28,6 +28,8 @@ int main(){
 
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = htons(32351); //makes sure port is stored in big-endian
+
+    // TODO: CHRIS CHANGE LOGIC HERE FOR CONNECTING TO SERVER!
     serverAddr.sin_addr.s_addr = inet_network("1.1.0.127"); //stores ip string in big-endian
 
     if(connect(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0)
@@ -58,9 +60,7 @@ int main(){
     else {
         printf("Server or Client are in unstable state. Restart both\n");
     }
-
-
-    if(shutdown(sock, 1)==-1)
+    if(shutdown(sock, 2)==-1)
     {
         perror("on shutdown");
         exit(-1);

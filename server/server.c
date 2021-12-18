@@ -73,13 +73,32 @@ void main()
 	send(clientSock1, "ACK1", 5, 0);
 	recv(clientSock1, (dataPacket*)&serverData, sizeof(serverData), 0);
 
-	printf("Message Received: %c\n", serverData.charvalue);
-	printf("Message Received: %d\n", serverData.intvalue);
-	printf("Message Received: %f\n", serverData.floatvalue);
+	printf("Data Received: %c\n", serverData.charvalue);
+	printf("Data Received: %d\n", serverData.intvalue);
+	printf("Data Received: %f\n\n", serverData.floatvalue);
+
+	serverData.intvalue = 2*serverData.intvalue;
+	serverData.floatvalue = serverData.floatvalue + 1;
+	serverData.charvalue = (char)((int)serverData.charvalue + 1);
+
+	clientSock2 = accept(sock, (struct sockaddr*)&clientAddr, &addrsize);
+	send(clientSock2, "ACK2", 5, 0);
+	if(clientSock2 == -1)
+	{
+		perror("On accept");
+		exit(-1);
+	}
+	printf("Connection made with client %s\n", inet_ntoa(clientAddr.sin_addr));
+
+	printf("Data Sent: %c\n", serverData.charvalue);
+	printf("Data Sent: %d\n", serverData.intvalue);
+	printf("Data Sent: %f\n", serverData.floatvalue);
+
+    send(clientSock2, (dataPacket*)&serverData, sizeof(serverData), 0);
 
 	//close the client socket and also the server socket
-	printf("Server - all messages read - connection being closed\n");
-
+	printf("Server - process complete - connection being closed\n");
 	close(clientSock1);
+	close(clientSock2);
 	close(sock);
 }
