@@ -28,7 +28,7 @@ int main()
     struct hostent* hostInfo;
     struct in_addr** addrList;
     char* serverDNS, *dnsIP;
-
+    char* server_address;
     /*******************************************************
      * Setting up client socket. 
      * AF_INET = IP 
@@ -45,7 +45,8 @@ int main()
     /*******************************************************
      * Query hostname by DNS 
      ******************************************************/
-    serverDNS = "elon.sdsurocketproject.org";
+    //take in server address char array from CLI to pass
+    server_address=argv[1];
     if ((hostInfo = gethostbyname((const char*)serverDNS)) == NULL)
 	{
         perror("getting host info"); //error getting host info
@@ -64,7 +65,7 @@ int main()
      *******************************************************/
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = htons(32351); //makes sure port is stored in big-endian
-    serverAddr.sin_addr.s_addr = inet_network(dnsIP); //stores ip string in big-endian
+    serverAddr.sin_addr.s_addr = inet_network(server_address); //stores ip string in big-endian
     if(connect(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0)
     {
         perror("on connect");
