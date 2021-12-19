@@ -47,15 +47,16 @@ int main(int argc, char** argv)
      ******************************************************/
     //take in server address char array from CLI to pass
     server_address=argv[1];
-    if ((hostInfo = gethostbyname((const char*)serverDNS)) == NULL)
+    if ((hostInfo = gethostbyname((const char*)server_address)) == NULL)
 	{
         perror("getting host info"); //error getting host info
         exit(-1);
 	}
 	addrList = (struct in_addr**)hostInfo->h_addr_list;
 	dnsIP = inet_ntoa(*addrList[0]);
-	printf("DNS from %s returned IP: %s\n\n", serverDNS, dnsIP);
+	printf("DNS from %s returned IP: %s\n\n", server_address, dnsIP);
 
+    //printf("%s", dnsIP);
 
     /*******************************************************
      * Setting up server address information and make connection attempt 
@@ -65,7 +66,7 @@ int main(int argc, char** argv)
      *******************************************************/
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = htons(32351); //makes sure port is stored in big-endian
-    serverAddr.sin_addr.s_addr = inet_network(server_address); //stores ip string in big-endian
+    serverAddr.sin_addr.s_addr = inet_network("205.0.168.192"); //stores ip string in big-endian
     if(connect(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0)
     {
         perror("on connect");
