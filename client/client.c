@@ -15,7 +15,7 @@ typedef struct {
     float floatvalue;
 } dataPacket;
 
-int main()
+int main(int argc, char** argv)
 {
     /*******************************************************
      * Defining all variables
